@@ -78,6 +78,33 @@ export const Register = () => {
 
 
 
+    const [ emailList, setEmailList ] = useState([]);
+
+    useEffect( ()=> {
+        FirebaseDb.child('users').on('value', snapshot => {
+            if(snapshot.val() != null ){
+                setEmailList({
+                    ...snapshot.val()
+                })
+            }
+        } )
+    },[formEmail])
+
+    console.log(emailList)
+
+    // const filteredEmails = emailList.filter(
+    //     number => {
+
+    //     }
+    // )
+
+
+
+
+
+
+
+
 
     return (
         <>
