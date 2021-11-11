@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FirebaseDb from '../Fire';
 
 export const Register = () => {
@@ -7,12 +7,20 @@ export const Register = () => {
 
     const [formEmail, setEmail] = useState("");
     const [formPassword, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("")
 
- 
+    const [emailError, setEmailError] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [isvalid, setIsValid] = useState(false);
 
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const registerForm = document.getElementById('regForm');
+
+    const resetForm = () => {
+        registerForm.reset();
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+    }
 
     const initialData = ({
         email: formEmail,
@@ -20,26 +28,51 @@ export const Register = () => {
     })
 
 
+    useEffect(() => {
+        if (formEmail !== "") {
+            setEmailError(true)
+        } else {
+            setEmailError(false)
+        }
+
+    }, [formEmail])
+
+
+    useEffect(() => {
+        if (confirmPassword === formPassword) {
+            setConfirmPasswordError(true)
+        } else {
+            setConfirmPasswordError(false)
+        }
+    }, [confirmPassword])
+
+
+    useEffect(() => {
+        if (confirmPasswordError && emailError) {
+            setIsValid(true);
+        } else {
+            setIsValid(false);
+        }
+    }, [confirmPasswordError], [emailError])
 
 
 
     const userSubmit = (e) => {
         e.preventDefault();
+        resetForm();
 
-        FirebaseDb.child('users').push(
-            initialData,
-            err => {
-                if(err){
-                    console.log(err)
+        if (confirmPasswordError) {
+
+            FirebaseDb.child('users').push(
+                initialData,
+                err => {
+                    if (err) {
+                        console.log(err)
+                    }
                 }
-            }
-        )
+            )
 
-        
-
-
-
-
+        }
     }
 
 
@@ -63,14 +96,14 @@ export const Register = () => {
                     </div>
 
 
-                    <form className="form-grop" onSubmit={userSubmit}>
+                    <form className="form-grop" onSubmit={userSubmit} id="regForm">
 
                         <div className="row">
                             <div className="col-lg-12 text-left">
                                 <label className="d-block">Email</label>
                                 <input
                                     className="w-100"
-                                    type="text"
+                                    type="email"
                                     name="email"
                                     value={formEmail}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -87,10 +120,10 @@ export const Register = () => {
                                     value={formPassword}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <p>{passwordError}</p>
+
                             </div>
 
-                            {/* <div className="col-lg-6 text-left">
+                            <div className="col-lg-6 text-left">
                                 <label className="d-block">Match Password</label>
                                 <input
                                     className="w-100"
@@ -98,19 +131,32 @@ export const Register = () => {
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
-                            </div> */}
+                                {confirmPasswordError ? (
+                                    <>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>Password Missmatch</p>
+                                    </>
+                                )}
+                            </div>
+
 
                             <div className="col-6 text-left">
-                                <button
-                                    className="btn btn-primary"
-                                    type="submit"
-                                >Submit</button>
+                                {isvalid ? (
+                                    <>
+                                        <button className="btn btn-primary" type="submit" >Submit</button>
+
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className="btn btn-primary" disabled>Submit</button>
+                                    </>
+                                )}
                             </div>
                         </div>
 
                     </form>
-
-
 
                 </div>
             </section>
