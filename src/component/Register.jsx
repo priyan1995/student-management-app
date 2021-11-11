@@ -79,7 +79,8 @@ export const Register = () => {
 
 
     const [ emailList, setEmailList ] = useState([]);
-
+    const [ foundEmail, setFoundEmail ] = useState(false);
+ 
     useEffect( ()=> {
         FirebaseDb.child('users').on('value', snapshot => {
             if(snapshot.val() != null ){
@@ -90,13 +91,33 @@ export const Register = () => {
         } )
     },[formEmail])
 
-    console.log(emailList)
+    //console.log(emailList)
 
-    // const filteredEmails = emailList.filter(
-    //     number => {
 
-    //     }
-    // )
+    
+    
+    const setFoundEmailFunc = () => {
+        // Object.keys(emailList).map(id=>{      
+            
+
+
+     
+        // emailList
+        // .filter(em => em == formEmail)
+        // .map(em=>)
+    }
+
+   
+
+    setFoundEmailFunc()
+
+    // useEffect( ()=> {
+    //         if(){
+
+    //         }else{
+
+    //         }
+    // },[formEmail] )
 
 
 
