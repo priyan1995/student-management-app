@@ -1,24 +1,50 @@
 import React, { useState } from 'react';
+import FirebaseDb from '../Fire';
 
 export const Register = () => {
 
-    const [userName, setUSerName] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const [userError, setUserError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-    const [hasAccount, setHasAccount] = useState(false);
+    const [formEmail, setEmail] = useState("");
+    const [formPassword, setPassword] = useState("");
 
-    const userSubmit =(e) => {
+ 
+
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+    const initialData = ({
+        email: formEmail,
+        password: formPassword
+    })
+
+
+
+
+
+    const userSubmit = (e) => {
         e.preventDefault();
-           
+
+        FirebaseDb.child('users').push(
+            initialData,
+            err => {
+                if(err){
+                    console.log(err)
+                }
+            }
+        )
+
+        
+
+
+
+
     }
 
 
-    //console.log(confirmPassword);
+
+
 
     return (
         <>
@@ -41,39 +67,43 @@ export const Register = () => {
 
                         <div className="row">
                             <div className="col-lg-12 text-left">
-                                <label className="d-block">Username</label>
-                                <input 
-                                className="w-100" 
-                                type="text"
-                                value={userName}
-                                onChange={(e)=>setUSerName(e.target.value)}
-                                 />
+                                <label className="d-block">Email</label>
+                                <input
+                                    className="w-100"
+                                    type="text"
+                                    name="email"
+                                    value={formEmail}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <p>{emailError}</p>
                             </div>
 
                             <div className="col-lg-6 text-left">
                                 <label className="d-block">Password</label>
-                                <input 
-                                className="w-100" 
-                                type="password"
-                                value={password}
-                                onChange={(e)=>setPassword(e.target.value)}                                
+                                <input
+                                    className="w-100"
+                                    type="password"
+                                    name="password"
+                                    value={formPassword}
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
+                                <p>{passwordError}</p>
                             </div>
 
-                            <div className="col-lg-6 text-left">
+                            {/* <div className="col-lg-6 text-left">
                                 <label className="d-block">Match Password</label>
-                                <input 
-                                className="w-100" 
-                                type="password"
-                                value={confirmPassword}
-                                onChange={(e)=>setConfirmPassword(e.target.value)}
+                                <input
+                                    className="w-100"
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
-                            </div>
+                            </div> */}
 
                             <div className="col-6 text-left">
-                                <button 
-                                className="btn btn-primary"
-                                type="submit"
+                                <button
+                                    className="btn btn-primary"
+                                    type="submit"
                                 >Submit</button>
                             </div>
                         </div>
