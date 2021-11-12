@@ -96,28 +96,33 @@ export const Register = () => {
 
     
     
-    const setFoundEmailFunc = () => {
-        // Object.keys(emailList).map(id=>{      
-            
+   
+    useEffect(() => {
 
+        const getFilteredEmail = Object.values(emailList).filter(user => user.email === formEmail);
 
-     
-        // emailList
-        // .filter(em => em == formEmail)
-        // .map(em=>)
-    }
+        if (getFilteredEmail != "") {
+            setFoundEmail(true)
+        } else {
+            setFoundEmail(false)
+        }
+
+    }, [formEmail])
 
    
 
-    setFoundEmailFunc()
 
-    // useEffect( ()=> {
-    //         if(){
 
-    //         }else{
 
-    //         }
-    // },[formEmail] )
+    useEffect(() => {
+        if (confirmPasswordError && emailError ) {
+            setIsValid(true);
+        } else {
+            setIsValid(false);
+        }
+    }, [confirmPassword])
+
+
 
 
 
