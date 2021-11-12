@@ -95,8 +95,6 @@ export const Register = () => {
 
 
 
-
-
     useEffect(() => {
 
         const getFilteredEmail = Object.values(emailList).filter(user => user.email === formEmail);
@@ -108,11 +106,6 @@ export const Register = () => {
         }
 
     }, [formEmail])
-
-
-
-
-
 
 
     useEffect(() => {
@@ -133,20 +126,7 @@ export const Register = () => {
             setRequired(true)
         }
     }, [formEmail,formPassword,confirmPassword])
-
-
-
-
-     console.log(requiredData)
-
-
-
-
-
-
-
-
-
+    
 
 
 
