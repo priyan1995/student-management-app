@@ -1,20 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import FirebaseDb from '../Fire';
 
 export const Login = (token) => {
 
-const [ userEmail, setUserEmail ] = useState('')
-const [ password, setPassword ] = useState('')
+    const [userEmail, setUserEmail] = useState('')
+    const [userPassword, setPassword] = useState('')
+
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        FirebaseDb.child('users').on('value', snapshot => {
+            if (snapshot.val() != null) {
+                setUserData({
+                    ...snapshot.val()
+                })
+            }
+        })
+
+    }, [])
 
 
-const submitHandler = (e) => {
-    e.preventDefault();
+    // useEffect(() => {
+    //     const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail);
+    //     const getFilteredLoginPassword = Object.values(userData).filter(user => user.password === userPassword);
+    //     console.log(getFilteredLoginEmail)
+    //     console.log(getFilteredLoginPassword)
 
-    console.log(userEmail);
-    console.log(password);
+    // }, [])
 
-    
 
-}
+
+    //   console.log(userData)
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        // console.log(userEmail);
+        // console.log(userPassword);
+
+        const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail);
+        const getFilteredLoginPassword = Object.values(userData).filter(user => user.password === userPassword);
+
+        if (getFilteredLoginEmail != "" && getFilteredLoginPassword != "") {
+            //console.log("Login Correct")
+        } else {
+           // console.log("Login Incorrect")
+        }
+
+
+
+    }
 
     return (
         <>
@@ -34,22 +69,22 @@ const submitHandler = (e) => {
 
                             <div className="col-lg-6">
                                 <label>Email</label>
-                                <input 
-                                type="email"
-                                name="email"
-                                value={userEmail}
-                                onChange={(e)=>setUserEmail(e.target.value)}                                
-                                required/>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={userEmail}
+                                    onChange={(e) => setUserEmail(e.target.value)}
+                                    required />
                             </div>
 
                             <div className="col-lg-6">
                                 <label>Password</label>
-                                <input 
-                                type="password" 
-                                name="password"
-                                value={password}
-                                onChange={(e)=>setPassword(e.target.value)}                                
-                                required/>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={userPassword}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required />
                             </div>
 
                             <div className="col-6">
