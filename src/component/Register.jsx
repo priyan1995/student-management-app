@@ -78,51 +78,54 @@ export const Register = () => {
 
 
 
-    const [ emailList, setEmailList ] = useState([]);
-    const [ foundEmail, setFoundEmail ] = useState(false);
- 
-    useEffect( ()=> {
+    const [emailList, setEmailList] = useState([]);
+    const [notFoundEmail, setNotFoundEmail] = useState(false);
+
+    useEffect(() => {
         FirebaseDb.child('users').on('value', snapshot => {
-            if(snapshot.val() != null ){
+            if (snapshot.val() != null) {
                 setEmailList({
                     ...snapshot.val()
                 })
             }
-        } )
-    },[formEmail])
+        })
+    }, [formEmail])
 
     //console.log(emailList)
 
 
-    
-    
-   
+
+
+
     useEffect(() => {
 
         const getFilteredEmail = Object.values(emailList).filter(user => user.email === formEmail);
 
         if (getFilteredEmail != "") {
-            setFoundEmail(true)
+            setNotFoundEmail(false)
         } else {
-            setFoundEmail(false)
+            setNotFoundEmail(true)
         }
 
     }, [formEmail])
 
-   
+    console.log(notFoundEmail)
+
+
 
 
 
 
     useEffect(() => {
-        if (confirmPasswordError && emailError ) {
+        if (confirmPasswordError && notFoundEmail) {
             setIsValid(true);
         } else {
             setIsValid(false);
         }
-    }, [confirmPassword])
+    }, [notFoundEmail,confirmPasswordError])
 
 
+    console.log(isvalid)
 
 
 
@@ -160,8 +163,17 @@ export const Register = () => {
                                     name="email"
                                     value={formEmail}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
                                 <p>{emailError}</p>
+                                {notFoundEmail ? (
+                                    <>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>Email Already Exist</p>
+                                    </>
+                                )}
                             </div>
 
                             <div className="col-lg-6 text-left">
@@ -172,6 +184,7 @@ export const Register = () => {
                                     name="password"
                                     value={formPassword}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    required
                                 />
 
                             </div>
@@ -183,6 +196,7 @@ export const Register = () => {
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required
                                 />
                                 {confirmPasswordError ? (
                                     <>
