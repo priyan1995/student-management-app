@@ -109,7 +109,6 @@ export const Register = () => {
 
     }, [formEmail])
 
-    console.log(notFoundEmail)
 
 
 
@@ -122,10 +121,26 @@ export const Register = () => {
         } else {
             setIsValid(false);
         }
-    }, [notFoundEmail,confirmPasswordError])
+    }, [notFoundEmail, confirmPasswordError])
 
 
-    console.log(isvalid)
+    const [requiredData, setRequired] = useState(true);
+
+    useEffect(() => {
+        if (formEmail != "" && formPassword != "" && confirmPassword != "") {
+            setRequired(false)
+        } else {
+            setRequired(true)
+        }
+    }, [formEmail,formPassword,confirmPassword])
+
+
+
+
+     console.log(requiredData)
+
+
+
 
 
 
@@ -210,7 +225,7 @@ export const Register = () => {
 
 
                             <div className="col-6 text-left">
-                                {isvalid ? (
+                                {isvalid && !(requiredData) ? (
                                     <>
                                         <button className="btn btn-primary" type="submit" >Submit</button>
 
