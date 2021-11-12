@@ -20,31 +20,25 @@ export const Login = (token) => {
     }, [])
 
 
-    // useEffect(() => {
-    //     const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail);
-    //     const getFilteredLoginPassword = Object.values(userData).filter(user => user.password === userPassword);
-    //     console.log(getFilteredLoginEmail)
-    //     console.log(getFilteredLoginPassword)
-
-    // }, [])
+    
 
 
-
-    //   console.log(userData)
-
+  
     const submitHandler = (e) => {
         e.preventDefault();
 
-        // console.log(userEmail);
-        // console.log(userPassword);
 
         const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail);
         const getFilteredLoginPassword = Object.values(userData).filter(user => user.password === userPassword);
 
         if (getFilteredLoginEmail != "" && getFilteredLoginPassword != "") {
-            //console.log("Login Correct")
+           // console.log("Login Correct")
+
+           // set sessions here 
+           
         } else {
            // console.log("Login Incorrect")
+
         }
 
 
