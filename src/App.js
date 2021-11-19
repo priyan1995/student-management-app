@@ -3,6 +3,7 @@ import { Register } from './component/Register';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Home } from './component/Home';
 import { Login } from './component/Login';
+import {StudentAdd} from './students/StudentAdd';
 
 function App() {
   return (
@@ -18,11 +19,15 @@ function App() {
           </Route>
 
           <Route path="/login">
-            <Login  />
+            <Login />
           </Route>
 
           <Route exact path="/">
             <Home />
+          </Route>
+
+          <Route path="/create-student">
+            <StudentAdd />
           </Route>
 
 
