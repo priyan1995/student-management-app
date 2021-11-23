@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import FirebaseDb from '../Fire';
+import { Register } from './Register';
 
 export const Login = (token) => {
 
@@ -21,6 +23,7 @@ export const Login = (token) => {
 
 
 
+    const history = useHistory()
 
 
 
@@ -33,6 +36,8 @@ export const Login = (token) => {
         if (getFilteredLoginEmail != "") {
             localStorage.setItem('email', userEmail);
             console.log(userEmail)
+            history.push('/')
+
 
 
         } else {
@@ -44,6 +49,8 @@ export const Login = (token) => {
     return (
         <>
 
+
+
             <section className="pd-log-sec">
                 <div className="container">
                     <div className="row">
@@ -52,14 +59,15 @@ export const Login = (token) => {
                         </div>
                     </div>
 
-                    <div className="row">
 
-                        <form className="form-grop" onSubmit={submitHandler} id="LoginForm">
 
+                    <form className="form-grop" onSubmit={submitHandler} id="LoginForm">
+                        <div className="row">
 
                             <div className="col-lg-6">
                                 <label>Email</label>
                                 <input
+                                className="w-100"
                                     type="email"
                                     name="email"
                                     value={userEmail}
@@ -70,6 +78,7 @@ export const Login = (token) => {
                             <div className="col-lg-6">
                                 <label>Password</label>
                                 <input
+                                className="w-100"
                                     type="password"
                                     name="password"
                                     value={userPassword}
@@ -78,21 +87,23 @@ export const Login = (token) => {
                             </div>
 
                             <div className="col-6">
-                                <button type="submit">Submit</button>
+                                <button type="submit" className="btn btn-primary">Submit</button>
                             </div>
 
 
+                        </div>
 
-
-                        </form>
-
-                    </div>
-
+                    </form>
 
                 </div>
             </section>
 
+
+            <Register />
+
         </>
+
+
     )
 
 }

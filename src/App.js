@@ -1,37 +1,85 @@
 import './App.css';
 import { Register } from './component/Register';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory,Redirect } from "react-router-dom";
 import { Home } from './component/Home';
 import { Login } from './component/Login';
-import {StudentAdd} from './students/StudentAdd';
+import { StudentAdd } from './students/StudentAdd';
 import StudentList from './students/StudentsList';
+import { useEffect, useState } from 'react';
 
-function App() {
+const App = () => {
+
+  const [sessionVal, setSessionVal] = useState();
+
+  useEffect(() => {
+    setSessionVal(localStorage.getItem('email'))
+  }, [])
+
+  console.log(sessionVal);
+
+
+
+
+
+  const history = useHistory()
+
+  const deleteSession = () => {
+    localStorage.removeItem('email');
+    //redirectedToStudentList().
+    history.push('/login')
+
+
+
+
+
+  }
+
   return (
     <div className="App">
+
       <Router>
+
+
+
+
 
         <Switch>
 
-          <Route path="/register">
-            <Register />
-          </Route>
+          {sessionVal ? (
+            <>
+              <button onClick={deleteSession}>Logout</button>
+              <Route exact path="/">
+                <Home />
+              </Route>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+              <Route path="/create-student">
+                <StudentAdd />
+              </Route>
 
-          <Route exact path="/">
-            <Home />
-          </Route>
+              <Route path="/students-list">
+                <StudentList />
+              </Route>
+            </>
+          ) : (
 
-          <Route path="/create-student">
-            <StudentAdd />
-          </Route>
+            <>
+              <Redirect to='/login' />
 
-          <Route path="/students-list">
-          <StudentList />
-          </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+
+       
+
+            </>
+
+          )}
+
+
+
+
+
+
 
 
 
