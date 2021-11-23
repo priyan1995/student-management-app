@@ -20,29 +20,25 @@ export const Login = (token) => {
     }, [])
 
 
-    
 
 
-  
+
+
     const submitHandler = (e) => {
         e.preventDefault();
 
 
-        const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail);
-        const getFilteredLoginPassword = Object.values(userData).filter(user => user.password === userPassword);
+        const getFilteredLoginEmail = Object.values(userData).filter(user => user.email === userEmail && user.password === userPassword);
 
-        if (getFilteredLoginEmail != "" && getFilteredLoginPassword != "") {
-           // console.log("Login Correct")
+        if (getFilteredLoginEmail != "") {
+            localStorage.setItem('email', userEmail);
+            console.log(userEmail)
 
-           // set sessions here 
-           
+
         } else {
-           // console.log("Login Incorrect")
+            console.log("Login Incorrect")
 
         }
-
-
-
     }
 
     return (

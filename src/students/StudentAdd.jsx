@@ -7,9 +7,7 @@ import FirebaseDb from '../Fire';
 
 export const StudentAdd = () => {
 
-
     let history = useHistory();
-
 
     const redirectedToStudentList = event => {
         history.push({
